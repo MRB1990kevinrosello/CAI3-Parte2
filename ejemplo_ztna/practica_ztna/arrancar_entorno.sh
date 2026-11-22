@@ -5,6 +5,8 @@ pkill -f "python3 backend_finanzas.py" 2>/dev/null || true
 
 python3 backend_rrhh.py > rrhh.log 2>&1 &
 python3 backend_finanzas.py > finanzas.log 2>&1 &
+pkill -f "openssl ocsp" 2>/dev/null || true
+./ocsp_responder.sh
 /usr/sbin/nginx -p "$(pwd)" -e "$(pwd)/nginx_error.log" -c "$(pwd)/nginx.conf"
 
 echo "-> Entorno ZTNA arrancado"

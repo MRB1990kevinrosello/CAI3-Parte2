@@ -65,6 +65,7 @@ authorityKeyIdentifier = keyid,issuer
 basicConstraints       = critical, CA:FALSE
 keyUsage               = critical, digitalSignature, keyEncipherment
 extendedKeyUsage       = clientAuth
+authorityInfoAccess    = OCSP;URI:http://127.0.0.1:8888
 
 [ v3_servidor ]
 subjectKeyIdentifier   = hash
