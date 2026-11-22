@@ -5,7 +5,9 @@ mkdir -p pki/demoCA/newcerts
 touch pki/demoCA/index.txt
 echo 1000 > pki/demoCA/serial
 echo 1000 > pki/demoCA/crlnumber
-
+mkdir -p pki/rootCA
+touch pki/rootCA/index.txt
+echo 1000 > pki/rootCA/crlnumber
 cat << 'EOF' > pki/openssl.cnf
 [ ca ]
 default_ca = CA_default
@@ -26,6 +28,15 @@ default_crl_days  = 30
 default_md        = sha256
 preserve          = no
 policy            = policy_loose
+
+[ CA_root ]
+dir               = ./pki/rootCA
+database          = $dir/index.txt
+crlnumber         = $dir/crlnumber
+private_key       = ./pki/root_ca.key
+certificate       = ./pki/root_ca.crt
+default_md        = sha256
+default_crl_days  = 30
 
 [ policy_loose ]
 countryName             = optional
@@ -111,7 +122,11 @@ cat pki/sub_ca_empleados.crt pki/root_ca.crt > pki/chain_empleados.crt
 cat pki/sub_ca_dispositivos.crt pki/root_ca.crt > pki/chain_completa.crt
 cat pki/chain_empleados.crt pki/sub_ca_dispositivos.crt > pki/todas_las_cas.crt
 cat pki/server.crt pki/sub_ca_empleados.crt > pki/server_fullchain.crt
-openssl ca -config pki/openssl.cnf -gencrl -out pki/crl.pem 2>/dev/null
+echo "9. Revocando certificado de empleado despedido y generando CRLs..."
+openssl ca -config pki/openssl.cnf -revoke pki/pedro_despedido.crt -crl_reason affiliationChanged 2>/dev/null
+openssl ca -config pki/openssl.cnf -gencrl -out pki/crl_empleados.pem 2>/dev/null
+openssl ca -config pki/openssl.cnf -name CA_root -gencrl -out pki/crl_root.pem 2>/dev/null
+cat pki/crl_empleados.pem pki/crl_root.pem > pki/crl.pem
 
 rm -f pki/*.csr
 echo "-> PKI generada correctamente en la carpeta ./pki/"
