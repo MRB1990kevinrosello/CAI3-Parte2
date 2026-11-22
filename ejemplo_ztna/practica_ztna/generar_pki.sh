@@ -24,7 +24,7 @@ crl               = $dir/crl.pem
 private_key       = ./pki/sub_ca_empleados.key
 certificate       = ./pki/sub_ca_empleados.crt
 default_days      = 365
-default_crl_days  = 30
+default_crl_days  = 7
 default_md        = sha256
 preserve          = no
 policy            = policy_loose
@@ -36,7 +36,7 @@ crlnumber         = $dir/crlnumber
 private_key       = ./pki/root_ca.key
 certificate       = ./pki/root_ca.crt
 default_md        = sha256
-default_crl_days  = 30
+default_crl_days  = 7
 
 [ policy_loose ]
 countryName             = optional
@@ -56,6 +56,23 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer
 basicConstraints = critical, CA:true, pathlen:0
 keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+
+
+[ v3_cliente ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical, digitalSignature, keyEncipherment
+extendedKeyUsage       = clientAuth
+
+[ v3_servidor ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid,issuer
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical, digitalSignature, keyEncipherment
+extendedKeyUsage       = serverAuth
+subjectAltName         = DNS:localhost, IP:127.0.0.1
 EOF
 
 echo "1. Generando Root CA..."
@@ -86,8 +103,7 @@ openssl req -new -key pki/server.key \
   -subj "/C=ES/O=Hospital_Insegus/CN=localhost" -out pki/server.csr
 openssl x509 -req -in pki/server.csr -CA pki/sub_ca_empleados.crt -CAkey pki/sub_ca_empleados.key \
   -CAcreateserial -out pki/server.crt -days 365 -sha256 \
-  -extfile <(printf "subjectAltName=DNS:localhost,IP:127.0.0.1") 2>/dev/null
-
+  -extfile pki/openssl.cnf -extensions v3_servidor 2>/dev/null
 
 emitir_empleado() {
   NOMBRE=$1
@@ -96,7 +112,7 @@ emitir_empleado() {
   openssl genrsa -out pki/${NOMBRE}.key 2048 2>/dev/null
   openssl req -new -key pki/${NOMBRE}.key \
     -subj "/C=ES/O=Hospital_Insegus/OU=${OU}/CN=${CN}" -out pki/${NOMBRE}.csr
-  openssl ca -batch -config pki/openssl.cnf -in pki/${NOMBRE}.csr \
+    openssl ca -batch -config pki/openssl.cnf -extensions v3_cliente -in pki/${NOMBRE}.csr \
     -out pki/${NOMBRE}.crt -notext 2>/dev/null
 }
 
@@ -127,6 +143,7 @@ openssl ca -config pki/openssl.cnf -revoke pki/pedro_despedido.crt -crl_reason a
 openssl ca -config pki/openssl.cnf -gencrl -out pki/crl_empleados.pem 2>/dev/null
 openssl ca -config pki/openssl.cnf -name CA_root -gencrl -out pki/crl_root.pem 2>/dev/null
 cat pki/crl_empleados.pem pki/crl_root.pem > pki/crl.pem
-
+chmod 600 pki/*.key
+chmod 700 pki/demoCA pki/rootCA
 rm -f pki/*.csr
 echo "-> PKI generada correctamente en la carpeta ./pki/"
