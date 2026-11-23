@@ -1,12 +1,14 @@
 #!/bin/bash
 pkill -f "python3 backend_rrhh.py" 2>/dev/null || true
 pkill -f "python3 backend_finanzas.py" 2>/dev/null || true
+pkill -f "python3 pdp_autorizacion.py" 2>/dev/null || true
 /usr/sbin/nginx -p "$(pwd)" -c "$(pwd)/nginx.conf" -s stop 2>/dev/null || true
 
 ./generar_secreto_gateway.sh
-mkdir -p tmp                      # temporales de nginx
+mkdir -p tmp                     
 python3 backend_rrhh.py > rrhh.log 2>&1 &
 python3 backend_finanzas.py > finanzas.log 2>&1 &
+python3 pdp_autorizacion.py > pdp.log 2>&1 &
 pkill -f "openssl ocsp" 2>/dev/null || true
 ./ocsp_responder.sh
 /usr/sbin/nginx -p "$(pwd)" -e "$(pwd)/nginx_error.log" -c "$(pwd)/nginx.conf"

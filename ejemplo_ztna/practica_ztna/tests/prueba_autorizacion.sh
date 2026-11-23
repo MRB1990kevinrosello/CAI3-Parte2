@@ -1,3 +1,4 @@
+#!/bin/bash
 cd "$(dirname "$0")/.." || exit 1
 GW=https://localhost:8443
 
