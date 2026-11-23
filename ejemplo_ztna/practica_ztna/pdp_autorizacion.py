@@ -78,7 +78,7 @@ class PDPHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    cargar_politica() 
+    cargar_politica()
     server = HTTPServer((HOST, PUERTO), PDPHandler)
     print(f"PDP de autorización escuchando en {HOST}:{PUERTO}...", flush=True)
     server.serve_forever()
