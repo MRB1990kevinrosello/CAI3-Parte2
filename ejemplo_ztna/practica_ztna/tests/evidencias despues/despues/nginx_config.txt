@@ -1,0 +1,136 @@
+nginx: the configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/nginx.conf syntax is ok
+nginx: configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/nginx.conf test is successful
+# configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/nginx.conf:
+worker_processes 1;
+pid ./nginx.pid;
+error_log ./nginx_error.log info;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    server_tokens off;                      # no revelar la versión de nginx
+
+    # Temporales dentro del proyecto (sin root no se puede escribir en /var/lib/nginx)
+    client_body_temp_path ./tmp/client_body;
+    proxy_temp_path       ./tmp/proxy;
+    fastcgi_temp_path     ./tmp/fastcgi;
+    uwsgi_temp_path       ./tmp/uwsgi;
+    scgi_temp_path        ./tmp/scgi;
+
+    include conf/logging.conf;
+    include conf/secreto_gateway.conf;
+
+    server {
+        listen 8443 ssl;
+        server_name localhost;
+
+        include conf/tls_mtls.conf;
+        include conf/authz.conf;
+    }
+}
+
+# configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/conf/logging.conf:
+# =====================================================================
+# conf/logging.conf - Registro de evidencias del Gateway ZTNA
+# Se incluye dentro del bloque http {} de nginx.conf
+# =====================================================================
+
+# Formato JSON: una línea = una petición, con quién, cómo y qué resultado
+log_format ztna_json escape=json
+    '{'
+        '"fecha":"$time_iso8601",'
+        '"id_peticion":"$request_id",'
+        '"ip_origen":"$remote_addr",'
+        '"metodo":"$request_method",'
+        '"uri":"$request_uri",'
+        '"estado":$status,'
+        '"bytes":$body_bytes_sent,'
+        '"tls_protocolo":"$ssl_protocol",'
+        '"tls_cifrado":"$ssl_cipher",'
+        '"cert_verificacion":"$ssl_client_verify",'
+        '"cert_sujeto":"$ssl_client_s_dn",'
+        '"cert_emisor":"$ssl_client_i_dn",'
+        '"cert_serie":"$ssl_client_serial",'
+        '"cert_caducidad":"$ssl_client_v_end",'
+        '"backend":"$upstream_addr",'
+        '"backend_estado":"$upstream_status",'
+        '"tiempo":$request_time'
+    '}';
+
+# Marca como "denegada" toda respuesta 4xx o 5xx
+map $status $ztna_denegado {
+    ~^[45]  1;
+    default 0;
+}
+
+# Log completo (auditoría) y log solo de denegaciones (detección de ataques)
+access_log ./nginx_access.log    ztna_json;
+access_log ./nginx_denegados.log ztna_json if=$ztna_denegado;
+
+# configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/conf/secreto_gateway.conf:
+# FICHERO GENERADO por generar_secreto_gateway.sh - NO SUBIR AL REPO
+map $host $ztna_gateway_token {
+    default "5b5afa3cffc5e7c46ec7ca9052e74753072c77daebecc1b08a920d8460fd04bc";
+}
+
+# configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/conf/tls_mtls.conf:
+# Certificado del servidor (TLS básico)
+        ssl_certificate     ./pki/server_fullchain.crt;
+        ssl_certificate_key ./pki/server.key;
+        ssl_protocols TLSv1.3;
+        ssl_session_tickets off;
+        ssl_session_cache off;
+        ssl_verify_client on;
+        ssl_client_certificate ./pki/chain_empleados.crt;
+        ssl_verify_depth 2;
+        ssl_crl ./pki/crl.pem;
+        # Revocación en tiempo real (OCSP); la CRL se mantiene como respaldo
+        ssl_ocsp leaf;
+        ssl_ocsp_responder http://127.0.0.1:8888;   
+
+# Solo certificados emitidos por la Sub-CA de Empleados
+if ($ssl_client_i_dn != "CN=Sub-CA Empleados,O=Hospital_Insegus,C=ES") {
+    return 403;
+}
+# configuration file /home/mauricio/cai3D/CAI3-Parte2/ejemplo_ztna/practica_ztna/conf/authz.conf:
+proxy_set_header Host            $host;
+proxy_set_header X-Client-DN     $ssl_client_s_dn;
+proxy_set_header X-Client-Serial $ssl_client_serial;
+proxy_set_header X-Client-Roles  $ztna_roles;
+proxy_set_header X-Request-ID    $request_id;
+proxy_set_header X-Gateway-Token $ztna_gateway_token;
+
+add_header Strict-Transport-Security "max-age=31536000" always;
+add_header X-Content-Type-Options    "nosniff"          always;
+add_header Cache-Control             "no-store"         always;
+
+location / {
+    return 404;
+}
+
+location = /rrhh {
+    limit_except GET { deny all; }
+    auth_request     /_pdp/rrhh;
+    auth_request_set $ztna_roles $upstream_http_x_ztna_roles;
+    proxy_pass http://127.0.0.1:8001/rrhh;
+}
+
+location = /finanzas {
+    limit_except GET { deny all; }
+    auth_request     /_pdp/finanzas;
+    auth_request_set $ztna_roles $upstream_http_x_ztna_roles;
+    proxy_pass http://127.0.0.1:8002/finanzas;
+}
+
+location ^~ /_pdp/ {
+    internal;
+    proxy_pass              http://127.0.0.1:8003/decidir/;
+    proxy_pass_request_body off;
+    proxy_set_header        Content-Length  "";
+    proxy_set_header        X-Client-DN     $ssl_client_s_dn;
+    proxy_set_header        X-Client-Issuer $ssl_client_i_dn;
+    proxy_set_header        X-Request-ID    $request_id;
+}
+

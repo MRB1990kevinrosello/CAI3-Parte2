@@ -1,0 +1,20 @@
+== ana_finanzas
+subject=C=ES, O=Hospital_Insegus, OU=Finanzas, CN=ana.garcia
+issuer=C=ES, O=Hospital_Insegus, CN=Sub-CA Empleados
+serial=1000
+== juan_soporte
+subject=C=ES, O=Hospital_Insegus, OU=Soporte, CN=juan.perez
+issuer=C=ES, O=Hospital_Insegus, CN=Sub-CA Empleados
+serial=1001
+== pedro_despedido
+subject=C=ES, O=Hospital_Insegus, OU=Finanzas, CN=pedro.ruiz
+issuer=C=ES, O=Hospital_Insegus, CN=Sub-CA Empleados
+serial=1002
+== impresora_planta2
+subject=C=ES, O=Hospital_Insegus, OU=IoT, CN=hp-laserjet
+issuer=C=ES, O=Hospital_Insegus, CN=Sub-CA Dispositivos
+serial=548F96C5F73F923A863CB3DA700DC9C86D6A0D36
+== atacante_externo
+subject=C=RU, O=EvilCorp, OU=Finanzas, CN=admin
+issuer=C=RU, O=EvilCorp, OU=Finanzas, CN=admin
+serial=7C9371460DA4692B1BA2FDA2149DEC9FB7D7EA62

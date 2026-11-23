@@ -1,0 +1,161 @@
+### P01 | Anónimo -> RRHH | https://localhost:8443/rrhh
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P02 | Anónimo -> Finanzas | https://localhost:8443/finanzas
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P03 | Ana -> RRHH | https://localhost:8443/rrhh
+{"servicio": "RRHH Información General", "datos": "Calendario de vacaciones 2026 aprobado para toda la plantilla.", "usuario_detectado_por_proxy": "CN=ana.garcia,OU=Finanzas,O=Hospital_Insegus,C=ES"}
+HTTP 200
+
+### P04 | Ana -> Finanzas | https://localhost:8443/finanzas
+{"servicio": "Estado Financiero (CONFIDENCIAL)", "datos": "Balance Q4: +4.2M EUR", "usuario_detectado_por_proxy": "CN=ana.garcia,OU=Finanzas,O=Hospital_Insegus,C=ES"}
+HTTP 200
+
+### P05 | Juan -> RRHH | https://localhost:8443/rrhh
+{"servicio": "RRHH Información General", "datos": "Calendario de vacaciones 2026 aprobado para toda la plantilla.", "usuario_detectado_por_proxy": "CN=juan.perez,OU=Soporte,O=Hospital_Insegus,C=ES"}
+HTTP 200
+
+### P06 | Juan -> Finanzas | https://localhost:8443/finanzas
+<html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 403
+
+### P07 | Pedro -> RRHH | https://localhost:8443/rrhh
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P08 | Pedro -> Finanzas | https://localhost:8443/finanzas
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P09 | Impresora -> RRHH | https://localhost:8443/rrhh
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P10 | Impresora -> Finanzas | https://localhost:8443/finanzas
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P11 | Atacante -> RRHH | https://localhost:8443/rrhh
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P12 | Atacante -> Finanzas | https://localhost:8443/finanzas
+<html>
+<head><title>400 The SSL certificate error</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>The SSL certificate error</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P13 | Directo -> Finanzas :8002 | http://localhost:8002/finanzas
+{"error": "Acceso directo no permitido. Use el Gateway ZTNA."}
+HTTP 403
+
+### P14 | Directo -> RRHH :8001 | http://localhost:8001/rrhh
+{"error": "Acceso directo no permitido. Use el Gateway ZTNA."}
+HTTP 403
+
+### P15 | Cabecera falsa via gateway | https://localhost:8443/finanzas
+<html>
+<head><title>400 No required SSL certificate was sent</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<center>No required SSL certificate was sent</center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 400
+
+### P16 | Ana -> /finanzasXYZ | https://localhost:8443/finanzasXYZ
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+HTTP 404
+
+### P17 | Negociación TLS 1.1 | localhost:8443
+40574913917F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:../ssl/record/rec_layer_s3.c:918:SSL alert number 70
+CONNECTED(00000003)
+New, (NONE), Cipher is (NONE)
+Protocol: TLSv1.1
+    Protocol  : TLSv1.1
+
+### P18 | Cabecera falsa directo :8002 | http://localhost:8002/finanzas
+{"error": "Acceso directo no permitido. Use el Gateway ZTNA."}
+HTTP 403
+

@@ -1,0 +1,15 @@
+2026/11/23 17:40:30 [info] 845#845: *1 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /rrhh HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *2 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /finanzas HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *3 client 127.0.0.1 closed keepalive connection
+2026/11/23 17:40:30 [info] 845#845: *7 client 127.0.0.1 closed keepalive connection
+2026/11/23 17:40:30 [info] 845#845: *11 client 127.0.0.1 closed keepalive connection
+2026/11/23 17:40:30 [info] 845#845: *15 client 127.0.0.1 closed keepalive connection
+2026/11/23 17:40:30 [info] 845#845: *18 client SSL certificate verify error: (23:certificate revoked) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /rrhh HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *19 client SSL certificate verify error: (23:certificate revoked) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /finanzas HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *20 client SSL certificate verify error: (21:unable to verify the first certificate) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /rrhh HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *21 client SSL certificate verify error: (21:unable to verify the first certificate) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /finanzas HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *22 client SSL certificate verify error: (3:unable to get certificate CRL) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /rrhh HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *23 client SSL certificate verify error: (3:unable to get certificate CRL) while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /finanzas HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *24 client sent no required SSL certificate while reading client request headers, client: 127.0.0.1, server: localhost, request: "GET /finanzas HTTP/1.1", host: "localhost:8443"
+2026/11/23 17:40:30 [info] 845#845: *25 client 127.0.0.1 closed keepalive connection
+2026/11/23 17:40:30 [info] 845#845: *27 SSL_do_handshake() failed (SSL: error:0A000102:SSL routines::unsupported protocol) while SSL handshaking, client: 127.0.0.1, server: 0.0.0.0:8443

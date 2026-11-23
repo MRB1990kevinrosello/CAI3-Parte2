@@ -1,0 +1,27 @@
+Certificate Revocation List (CRL):
+        Version 2 (0x1)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=ES, O=Hospital_Insegus, CN=Sub-CA Empleados
+        Last Update: Nov 22 20:00:18 2026 GMT
+        Next Update: Dec 22 20:00:18 2026 GMT
+        CRL extensions:
+            X509v3 CRL Number: 
+                4096
+No Revoked Certificates.
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        2d:9b:79:c9:9a:63:9c:08:20:6e:96:70:47:95:26:1b:93:e7:
+        0e:2e:e5:46:bd:c7:c3:c2:a1:56:7a:05:b1:14:12:63:82:2d:
+        40:c0:b8:b1:d0:32:b1:08:10:3f:10:dc:af:b3:92:07:77:ce:
+        31:40:be:11:91:07:f1:c7:ea:73:4f:65:21:f8:38:2e:c4:7f:
+        d2:69:88:a0:4e:a6:1f:0f:6a:1f:0d:ee:8b:5a:e1:b7:cf:4f:
+        af:20:70:c0:f9:21:47:59:82:eb:52:1c:16:33:ec:7f:5e:42:
+        54:ac:30:dd:f4:31:64:70:3e:1d:45:c8:1c:65:30:87:c9:24:
+        4f:86:79:fd:be:18:db:5d:b5:f9:1a:8b:95:08:ad:e4:bb:08:
+        2a:10:0a:61:5c:06:3f:e7:a9:c2:e1:0a:83:3a:4c:ca:b6:7a:
+        e9:9b:49:68:7a:e0:fc:56:22:e0:6c:e2:4f:15:b6:8c:7d:95:
+        51:57:94:dc:e1:bc:e5:c4:74:d9:a1:cd:77:8d:59:bf:bb:88:
+        6a:f5:82:c7:30:52:b5:f7:0b:34:e4:66:d7:c1:27:88:2a:9e:
+        54:ff:ba:b4:e2:b6:b2:73:7e:36:55:aa:45:d5:72:de:6c:cf:
+        bc:51:c9:88:81:9d:ce:fd:59:d3:28:50:e6:19:82:c8:db:27:
+        45:28:ce:03

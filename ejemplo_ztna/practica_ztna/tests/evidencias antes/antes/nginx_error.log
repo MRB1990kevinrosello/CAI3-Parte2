@@ -1,0 +1,15 @@
+2026/11/22 21:35:26 [info] 1682#1682: *3 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *5 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *7 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *9 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *11 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *13 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *15 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *17 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *19 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *21 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *23 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *25 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:26 [info] 1682#1682: *27 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:45 [info] 1682#1682: *29 client 127.0.0.1 closed keepalive connection
+2026/11/22 21:35:50 [info] 1682#1682: *31 SSL_do_handshake() failed (SSL: error:0A000102:SSL routines::unsupported protocol) while SSL handshaking, client: 127.0.0.1, server: 0.0.0.0:8443
