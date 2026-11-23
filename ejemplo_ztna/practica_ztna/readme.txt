@@ -21,6 +21,13 @@ Si utilizas WSL2 copia la carpeta del proyecto dentro de tu directorio personal 
   - backend_rrhh.py      -> Microservicio interno de Recursos Humanos (puerto 8001)
   - backend_finanzas.py  -> Microservicio interno de Finanzas (puerto 8002)
   - cliente_ztna.py      -> Cliente interactivo para probar
+  - conf/                -> Partes de nginx.conf: tls_mtls.conf (PKI/mTLS), authz.conf (autorización), logging.conf (logs)
+  - pdp_autorizacion.py  -> PDP de autorización (127.0.0.1:8003), consultado por nginx con auth_request
+  - politicas/roles.json -> Roles de cada usuario y roles exigidos por cada recurso
+  - generar_secreto_gateway.sh -> Genera el secreto Gateway<->backends (lo llama arrancar_entorno.sh)
+  - ocsp_responder.sh    -> Responder OCSP de la Sub-CA Empleados (127.0.0.1:8888)
+  - tests/prueba_autorizacion.sh -> Pruebas de autorización y de acceso directo a los backends
+  - tests/demo_roles.sh  -> Demostración: cambiar permisos sin reemitir certificados
 
 3. PUESTA EN MARCHA
 

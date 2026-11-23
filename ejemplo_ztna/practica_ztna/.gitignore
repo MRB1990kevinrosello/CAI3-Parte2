@@ -1,3 +1,6 @@
 pki/
 *.log
 nginx.pid
+secretos/
+conf/secreto_gateway.conf
+tmp/

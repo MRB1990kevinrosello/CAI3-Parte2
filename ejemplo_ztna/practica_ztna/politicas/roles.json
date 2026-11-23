@@ -1,0 +1,12 @@
+{
+  "_info": "Política de autorización ZTNA. La mantiene RRHH/Seguridad. El certificado SOLO identifica (CN), los permisos se deciden aquí. Los cambios se aplican en la siguiente petición, sin reemitir certificados ni recargar nginx.",
+  "usuarios": {
+    "ana.garcia": { "activo": true,  "roles": ["empleado", "finanzas"] },
+    "juan.perez": { "activo": true,  "roles": ["empleado", "soporte"] },
+    "pedro.ruiz": { "activo": false, "roles": [] }
+  },
+  "recursos": {
+    "rrhh":     ["empleado"],
+    "finanzas": ["finanzas"]
+  }
+}
